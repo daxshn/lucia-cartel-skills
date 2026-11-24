@@ -149,9 +149,9 @@ function buildSkyline(svg, { seed, color, minH, maxH, windows, spire }) {
   const COLORS = ["#ffffff", "#ffffff", "#ffffff", "#8be9ff", "#ff9bd2", "#ffe08a", "#b9a6ff"];
   let W = 0, H = 0, dpr = 1, stars = [], shoot = null, last = 0;
   const LAYERS = [
-    { n: 160, speed: 18, size: [0.4, 1.0], streak: 0 },
-    { n: 90, speed: 70, size: [0.8, 1.6], streak: 0.06 },
-    { n: 40, speed: 240, size: [1.2, 2.4], streak: 0.12 },
+    { n: 110, speed: 5, size: [0.5, 1.1], streak: 0 },
+    { n: 60, speed: 11, size: [0.9, 1.8], streak: 0 },
+    { n: 26, speed: 20, size: [1.4, 2.6], streak: 0 },
   ];
   function resize() {
     dpr = Math.min(2, window.devicePixelRatio || 1);

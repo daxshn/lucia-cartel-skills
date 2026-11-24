@@ -40,34 +40,6 @@
         <div class="nebula n2"></div>
         <div class="nebula n3"></div>
         <canvas id="starfield"></canvas>
-        <div class="planet">
-          <div class="planet-ring back"></div>
-          <div class="planet-body"></div>
-          <div class="planet-ring front"></div>
-        </div>
-        <div class="moon"></div>
-        <div class="ship-path">
-          <div class="ship">
-            <div class="flame"></div>
-            <svg viewBox="0 0 220 110" class="ship-svg">
-              <!-- trail fins -->
-              <path d="M60 30 L28 6 L44 38 Z" fill="#f6c343" stroke="#1a0f2e" stroke-width="5" stroke-linejoin="round"/>
-              <path d="M60 80 L28 104 L44 72 Z" fill="#f6c343" stroke="#1a0f2e" stroke-width="5" stroke-linejoin="round"/>
-              <!-- body -->
-              <path d="M40 55 C40 30 80 24 130 26 C170 28 200 42 212 55 C200 68 170 82 130 84 C80 86 40 80 40 55 Z" fill="#ff2d55" stroke="#1a0f2e" stroke-width="6" stroke-linejoin="round"/>
-              <path d="M62 44 C100 36 150 36 190 48" fill="none" stroke="#ff8fa5" stroke-width="6" stroke-linecap="round"/>
-              <!-- belly stripe -->
-              <path d="M70 72 C110 78 160 76 196 64" fill="none" stroke="#b3123a" stroke-width="7" stroke-linecap="round"/>
-              <!-- window -->
-              <circle cx="150" cy="52" r="17" fill="#3ee6ff" stroke="#1a0f2e" stroke-width="6"/>
-              <circle cx="144" cy="46" r="5" fill="#fff"/>
-              <!-- crown badge -->
-              <path d="M88 60 L91 46 L98 53 L103 43 L108 53 L115 46 L118 60 Z" fill="#f6c343" stroke="#1a0f2e" stroke-width="4" stroke-linejoin="round"/>
-              <!-- nozzle -->
-              <rect x="30" y="44" width="14" height="22" rx="4" fill="#5b2a78" stroke="#1a0f2e" stroke-width="5"/>
-            </svg>
-          </div>
-        </div>
       </div>
 
       <div class="hero-inner">
@@ -108,6 +80,8 @@
           <div class="dots" id="dots"></div>
         </div>
       </div>
+
+      <canvas id="monster" aria-hidden="true"></canvas>
 
       <div class="ticker" aria-hidden="true">
         <div class="ticker-track" id="ticker"></div>
@@ -172,5 +146,6 @@
   </footer>
 
   <script src="app.js"></script>
+  <script type="module" src="monster.js"></script>
 </body>
 </html>
