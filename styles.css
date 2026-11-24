@@ -146,6 +146,52 @@ code {
   animation: fadeUp .8s 1.2s ease both;
 }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+.hero-copy .hero-cta { align-items: flex-start; gap: 18px; }
+
+/* gold button: lift, glow, shine sweep, bouncing arrow */
+.btn-shine { position: relative; overflow: hidden; isolation: isolate; transition: transform .18s ease, box-shadow .18s ease, background .25s ease; }
+.btn-shine::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .75) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn-shine:hover { background: #ffd35c; transform: translateY(-4px) rotate(-1.5deg); box-shadow: 0 9px 0 var(--ink), 0 0 34px rgba(246, 195, 67, .7); }
+.btn-shine:hover::before { transform: translateX(120%); transition: transform .7s ease; }
+.btn-shine .arrow-down { width: 1.1em; height: 1.1em; transition: transform .2s ease; }
+.btn-shine:hover .arrow-down { animation: nudge .7s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+
+/* YouTube-style button */
+.yt-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.btn-yt {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 13px 22px 13px 14px;
+  background: #ff0033; color: #fff;
+  font: 800 1rem/1 var(--body); text-decoration: none;
+  border: 3px solid var(--ink); border-radius: 999px;
+  box-shadow: 0 5px 0 var(--ink);
+  transition: transform .18s ease, box-shadow .18s ease, background .2s ease;
+}
+.btn-yt::after { /* pulse ring on hover */
+  content: ""; position: absolute; inset: -3px; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 0 0 rgba(255, 0, 51, .6);
+}
+.yt-icon { display: grid; place-items: center; width: 38px; height: 28px; transition: transform .25s cubic-bezier(.3, 1.8, .5, 1); }
+.yt-icon svg { width: 100%; height: 100%; }
+.btn-yt:hover { background: #d9002b; transform: translateY(-4px); box-shadow: 0 9px 0 var(--ink), 0 0 36px rgba(255, 0, 51, .55); }
+.btn-yt:hover .yt-icon { transform: scale(1.18) rotate(-6deg); }
+.btn-yt:hover::after { animation: ytPulse 1.2s ease-out infinite; }
+.btn-yt:active, .btn-shine:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--ink); }
+@keyframes ytPulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 51, .6); } 100% { box-shadow: 0 0 0 16px rgba(255, 0, 51, 0); } }
+.yt-note {
+  margin: 0; display: inline-flex; align-items: center; gap: 6px;
+  font-size: .85rem; font-weight: 700; color: #fff;
+  text-shadow: 0 1px 8px rgba(26, 15, 46, .6);
+}
+.yt-note .bell { width: 15px; height: 15px; color: var(--gold); transform-origin: 50% 10%; animation: ring 2.6s 3s ease-in-out infinite; }
+.yt-wrap:hover .bell { animation-duration: .8s; }
+@keyframes ring { 0%, 70%, 100% { transform: rotate(0); } 74% { transform: rotate(18deg); } 80% { transform: rotate(-16deg); } 86% { transform: rotate(10deg); } 92% { transform: rotate(-6deg); } }
 .hero-copy .hero-cta { animation: fadeUp .8s 1.4s ease both; }
 
 .billboards { position: relative; height: min(620px, 70vh); }
