@@ -25,6 +25,7 @@
     </a>
     <nav aria-label="Main">
       <a href="#skills">Skills</a>
+      <a href="#styles">Styles</a>
       <a href="#install">Install</a>
       <a href="#about">About</a>
     </nav>
@@ -76,6 +77,15 @@
       <div id="skill-list" class="skill-list"></div>
     </section>
 
+    <!-- FILM STYLES (Lemo-Opuscar) -->
+    <section id="styles" class="styles" aria-labelledby="styles-title">
+      <div class="section-head">
+        <h2 id="styles-title">Ten film styles to steal from</h2>
+        <p>Picked from <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">Lemo-Opuscar</a> by Lemomo, a toolbox of 99 looks that Claude builds entirely in code. Each download has the style guide and the demo film's code. Free for non-commercial use, with credit to Lemomo.</p>
+      </div>
+      <div id="style-grid" class="style-grid"></div>
+    </section>
+
     <!-- INSTALL -->
     <section id="install" class="install" aria-labelledby="install-title">
       <h2 id="install-title">Set one up in two minutes</h2>
@@ -93,6 +103,7 @@
           <p>Open Claude Code and say what you want, like <em>“use the faceless-shorts skill to make a short about why we get goosebumps.”</em></p>
         </li>
       </ol>
+      <p class="install-note">For a film style, unzip it into your project and tell Claude: <em>“read STYLE.md and DEMO.md, then make my short in this style.”</em></p>
       <p class="install-note">ClaudeAnimationBase1 is a project, not a single skill: unzip it anywhere, run <code>npm install</code>, then open the folder in Claude Code.</p>
     </section>
 
@@ -114,7 +125,7 @@
   </main>
 
   <footer class="footer">
-    <p>Made by Lucia Cartel. Skills are free to use. ClaudeAnimationBase1 builds on John Heibel's MIT-licensed starter kit.</p>
+    <p>Made by Lucia Cartel. Skills are free to use. ClaudeAnimationBase1 builds on John Heibel's MIT-licensed starter kit. Film styles and their preview clips are from <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">Lemo-Opuscar</a> by Lemomo (LemoLab): docs CC BY-NC 4.0, code MIT, films CC BY 4.0.</p>
   </footer>
 
   <script src="app.js"></script>

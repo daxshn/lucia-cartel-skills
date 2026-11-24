@@ -175,6 +175,29 @@ list.innerHTML = SKILLS.map((s) => `
     </div>
   </article>`).join("");
 
+/* ---------- film styles (Lemo-Opuscar) ---------- */
+const STYLES = [
+  ["rubber-hose", "1930s rubber hose cartoon", "Coffee Cup Chase", "A coffee cup chases a runaway sugar cube around the kitchen.", "81 KB"],
+  ["cel-anime-80s", "80s cel anime", "City Lights, 1987", "A courier girl rides through a rain-soaked neon city before dawn.", "97 KB"],
+  ["ukiyoe", "Ukiyo-e woodblock", "Toward the Mountain", "Every shot is a woodblock print, with a great wave at the climax.", "67 KB"],
+  ["papercut-red", "Red paper-cut", "Nian Comes to Town", "One girl's giant paper-cut lights up the village to scare off a beast.", "92 KB"],
+  ["hd-2d", "2.5D pixel art", "The Lampbearer", "A girl carries the last flame through a night forest to a dark lighthouse.", "90 KB"],
+  ["shadow-puppet", "Shadow puppetry", "Hou Yi Shoots the Suns", "Ten suns scorch the earth, told with leather puppets on a lit screen.", "78 KB"],
+  ["stained-glass", "Stained glass", "The Dragon of the East Window", "Sunlight crosses a cathedral window, waking each pane of a dragon tale.", "75 KB"],
+  ["neon-tubes", "Neon tubes", "Midnight Snack", "A neon cat steals the goldfish from the sign down the street.", "116 KB"],
+  ["crayon-world", "Crayon world 3D", "The Butterfly", "A first-person flight over a crayon village to one old man's flower.", "56 KB"],
+  ["backrooms", "Liminal found footage", "Night Shift Orientation", "A new hire films their first night in an endless yellow office.", "68 KB"],
+];
+document.getElementById("style-grid").innerHTML = STYLES.map(([slug, name, film, line, size]) => `
+  <article class="style-card reveal">
+    <div class="screen"><video muted loop playsinline preload="none" poster="media/styles/${slug}.jpg" data-src="media/styles/${slug}.mp4" aria-label="Clip from ${film}"></video></div>
+    <div class="style-body">
+      <h3>${name}</h3>
+      <p><strong>${film}.</strong> ${line}</p>
+      <a class="btn btn-gold btn-sm" href="downloads/styles/${slug}.zip" download>${DL_ICON} Download style <small>${size}</small></a>
+    </div>
+  </article>`).join("");
+
 /* ---------- play videos only while on screen ---------- */
 const videos = document.querySelectorAll("video[data-src]");
 const vio = new IntersectionObserver((entries) => {

@@ -261,6 +261,32 @@ code {
 .reel figcaption { margin-top: 18px; font-size: .82rem; font-weight: 600; color: var(--paper-dim); text-align: center; line-height: 1.3; }
 .reel figure:nth-child(even) figcaption { margin-top: 32px; }
 
+/* ---------- film styles ---------- */
+.styles { padding: 120px clamp(16px, 4vw, 40px) 40px; background: var(--night-2); }
+.section-head a { color: var(--gold); }
+.style-grid {
+  width: min(1180px, 100%); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;
+}
+.style-card {
+  display: flex; flex-direction: column;
+  background: #12091f;
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(246, 195, 67, .22), 0 18px 40px rgba(0, 0, 0, .4);
+}
+.style-card:nth-child(3n+2) { transform: translateY(24px); }
+.style-card.reveal.in:nth-child(3n+2) { transform: translateY(24px); }
+.screen { aspect-ratio: 16 / 9; background: #000; border-bottom: 3px solid var(--ink); }
+.screen video { width: 100%; height: 100%; object-fit: cover; }
+.style-body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.style-body h3 { font-family: var(--display); font-weight: 400; font-size: 1.55rem; line-height: 1.1; margin: 0 0 8px; color: #fff; }
+.style-body p { margin: 0 0 18px; font-size: .95rem; color: var(--paper-dim); flex: 1; }
+.style-body strong { color: var(--paper); }
+.style-body .btn { align-self: flex-start; }
+@media (max-width: 1080px) { .style-card:nth-child(3n+2), .style-card.reveal.in:nth-child(3n+2) { transform: none; } }
+
 /* ---------- install ---------- */
 .install { padding: 100px clamp(16px, 4vw, 40px); width: min(1180px, 100%); margin: 0 auto; }
 .install h2 { text-align: center; }

@@ -8,4 +8,6 @@ Website for the [Lucia Cartel](https://www.youtube.com/@LUCIACARTEL) YouTube cha
 
 Skills: doodle-shorts-remotion, ClaudeAnimationBase1, in-this-city-gta-short, faceless-shorts, cartoon-audio-short.
 
+Film styles: ten styles from [Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar) by Lemomo (LemoLab). Their docs are CC BY-NC 4.0, code MIT, preview films CC BY 4.0; each zip carries an ATTRIBUTION.txt.
+
 Hosted on Vercel; every push to `main` redeploys.
