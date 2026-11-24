@@ -196,11 +196,20 @@ code {
 
 /* looping slide carousel */
 .carousel { position: absolute; inset: 0; z-index: 4; animation: fadeUp 1s 1.7s ease both; }
+.carousel {
+  overflow: hidden;
+  -webkit-mask: radial-gradient(ellipse 62% 56% at 50% 50%, #000 62%, transparent 100%);
+          mask: radial-gradient(ellipse 62% 56% at 50% 50%, #000 62%, transparent 100%);
+}
 .carousel .phone {
-  left: 50%; top: 48%; height: 56%;
+  left: 50%; top: 50%; height: 44%;
   margin: 0;
-  border-width: 6px;
-  will-change: transform, opacity;
+  border-width: 5px;
+  will-change: transform, opacity, filter;
+  transition: box-shadow .4s ease;
+}
+.carousel .phone.focus {
+  box-shadow: 0 0 0 3px var(--gold), 0 8px 0 var(--ink), 0 0 50px 10px rgba(246, 195, 67, .45);
 }
 .billboards { animation: bobGroup 7s 2.8s ease-in-out infinite; }
 .dots { position: absolute; left: 50%; bottom: -6px; translate: -50% 0; z-index: 5; display: flex; gap: 8px; }

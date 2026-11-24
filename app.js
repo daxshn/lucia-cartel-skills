@@ -148,39 +148,67 @@ document.querySelectorAll(".skyline .win").forEach((w) => {
 });
 
 /* ---------- hero: 7 different clips on a smooth endless conveyor ---------- */
-// mix of channel shorts and Lemo-Opuscar films (cropped to 9:16, in media/hero/)
-const HERO_CLIPS = ["hero/rubber-hose", "doodle-gta6", "hero/neon-tubes", "city-bank", "hero/papercut-red", "clawd-bf", "hero/hd-2d"];
+// columns of phones that all slide top to bottom; the phone nearest the centre is
+// big and sharp, everything else blurs with distance. Mix of channel shorts and
+// Lemo-Opuscar films (cropped to 9:16, in media/hero/).
+const HERO_POOL = [
+  "hero/rubber-hose", "doodle-gta6", "hero/neon-tubes", "city-bank", "hero/papercut-red",
+  "clawd-bf", "hero/hd-2d", "faceless-goosebumps", "cartoon-gimli", "faceless-blackhole",
+  "city-lie", "doodle-sea", "faceless-phone", "cartoon-door", "clawd-tg",
+];
+const COLS = [-2, -1, 0, 1, 2];
+const PER_COL = 4;
+const COL_SPEED = { "-2": 22, "-1": 30, "0": 40, "1": 30, "2": 22 }; // px/s, centre fastest
 const carousel = document.getElementById("carousel");
-carousel.innerHTML = HERO_CLIPS.map((id) => `<div class="phone"><video muted loop playsinline preload="metadata" poster="media/${id}.jpg" src="media/${id}.mp4"></video></div>`).join("");
+const heroItems = [];
+let n = 0;
+COLS.forEach((c) => {
+  for (let r = 0; r < PER_COL; r++) {
+    const id = HERO_POOL[(n * PER_COL + r) % HERO_POOL.length];
+    heroItems.push({ c, r, id });
+  }
+  n++;
+});
+carousel.innerHTML = heroItems.map(({ id }) => `<div class="phone"><video muted loop playsinline preload="metadata" poster="media/${id}.jpg" src="media/${id}.mp4"></video></div>`).join("");
 document.getElementById("dots").remove();
-const heroPhones = [...carousel.children];
+heroItems.forEach((it, i) => { it.el = carousel.children[i]; it.v = it.el.firstElementChild; it.blur = -1; });
 const heroBox = document.querySelector(".billboards");
-let heroOff = 0, heroSpeed = 0, heroTarget = reduceMotion ? 0 : 46, heroLast = 0;
-heroBox.addEventListener("mouseenter", () => { heroTarget = reduceMotion ? 0 : 12; });
-heroBox.addEventListener("mouseleave", () => { heroTarget = reduceMotion ? 0 : 46; });
+let heroOff = 0, heroSpeed = 0, heroTarget = reduceMotion ? 0 : 1, heroLast = 0;
+heroBox.addEventListener("mouseenter", () => { heroTarget = reduceMotion ? 0 : 0.25; });
+heroBox.addEventListener("mouseleave", () => { heroTarget = reduceMotion ? 0 : 1; });
 function drawHero(t) {
   const dt = heroLast ? Math.min(0.05, (t - heroLast) / 1000) : 0;
   heroLast = t;
-  heroSpeed += (heroTarget - heroSpeed) * Math.min(1, dt * 2.5); // ease speed changes
+  heroSpeed += (heroTarget - heroSpeed) * Math.min(1, dt * 2.5);
   heroOff += heroSpeed * dt;
   const W = carousel.offsetWidth || 560;
-  const sp = (W * 0.96) / heroPhones.length;               // all 7 fit across the box
-  const L = sp * heroPhones.length;
+  const H = carousel.offsetHeight || 600;
+  const ph = heroItems[0].el.offsetHeight || 260;
+  const pw = heroItems[0].el.offsetWidth || 150;
+  const gapX = pw * 1.12;
+  const spY = ph * 1.1;
+  const L = spY * PER_COL;
   const half = L / 2;
-  heroPhones.forEach((p, i) => {
-    const x = ((((i * sp - heroOff) % L) + L) % L) - half; // -half .. half
-    const k = Math.abs(x) / half;                            // 0 centre, 1 edge
-    const scale = 1.18 - 0.55 * Math.pow(k, 0.85);
-    const rot = (x / half) * 18;
-    const y = k * k * 46;
-    const op = Math.max(0, Math.min(1, (1 - k) / 0.12));    // fade only right at the wrap point
-    p.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
-    p.style.opacity = op;
-    p.style.zIndex = String(100 - Math.round(k * 50));
-    p.style.filter = `brightness(${1 - k * 0.35})`;
-    const v = p.firstElementChild;
-    if (op > 0.05 && v.paused && !reduceMotion) v.play().catch(() => {});
-    else if (op <= 0.05 && !v.paused) v.pause();
+  heroItems.forEach((it) => {
+    const shift = it.c * spY * 0.37; // stagger columns so rows don't line up
+    const y = ((((it.r * spY + heroOff * COL_SPEED[it.c] + shift) % L) + L) % L) - half; // top to bottom
+    const x = it.c * gapX;
+    const dn = Math.min(1, Math.hypot(x / (W * 0.55), y / (H * 0.62)));
+    const focus = Math.max(0, 1 - dn / 0.4);               // 1 only for the centre phone
+    const scale = 0.86 + 0.36 * focus;
+    const blur = dn < 0.14 ? 0 : Math.round(Math.min(5, dn * 8) * 2) / 2; // quantised to keep repaints cheap
+    const edge = Math.max(0, Math.min(1, (half - Math.abs(y)) / (spY * 0.5))); // fade at the wrap point
+    it.el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
+    it.el.style.opacity = edge;
+    it.el.style.zIndex = String(100 - Math.round(dn * 60));
+    if (blur !== it.blur) {
+      it.el.style.filter = blur ? `blur(${blur}px) brightness(${1 - dn * 0.4})` : "none";
+      it.blur = blur;
+    }
+    it.el.classList.toggle("focus", focus > 0.45);
+    const visible = edge > 0.05;
+    if (visible && it.v.paused && !reduceMotion) it.v.play().catch(() => {});
+    else if (!visible && !it.v.paused) it.v.pause();
   });
   requestAnimationFrame(drawHero);
 }
