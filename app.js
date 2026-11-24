@@ -147,6 +147,44 @@ document.querySelectorAll(".skyline .win").forEach((w) => {
   w.classList.add(Math.random() > 0.93 ? "flick" : "on");
 });
 
+/* ---------- hero: 7 different clips on a smooth endless conveyor ---------- */
+const HERO_CLIPS = ["doodle-gta6", "faceless-goosebumps", "clawd-bf", "city-bank", "cartoon-gimli", "faceless-blackhole", "city-lie"];
+const carousel = document.getElementById("carousel");
+carousel.innerHTML = HERO_CLIPS.map((id) => `<div class="phone"><video muted loop playsinline preload="metadata" poster="media/${id}.jpg" src="media/${id}.mp4"></video></div>`).join("");
+document.getElementById("dots").remove();
+const heroPhones = [...carousel.children];
+const heroBox = document.querySelector(".billboards");
+let heroOff = 0, heroSpeed = 0, heroTarget = reduceMotion ? 0 : 46, heroLast = 0;
+heroBox.addEventListener("mouseenter", () => { heroTarget = reduceMotion ? 0 : 12; });
+heroBox.addEventListener("mouseleave", () => { heroTarget = reduceMotion ? 0 : 46; });
+function drawHero(t) {
+  const dt = heroLast ? Math.min(0.05, (t - heroLast) / 1000) : 0;
+  heroLast = t;
+  heroSpeed += (heroTarget - heroSpeed) * Math.min(1, dt * 2.5); // ease speed changes
+  heroOff += heroSpeed * dt;
+  const W = carousel.offsetWidth || 560;
+  const sp = (W * 0.96) / heroPhones.length;               // all 7 fit across the box
+  const L = sp * heroPhones.length;
+  const half = L / 2;
+  heroPhones.forEach((p, i) => {
+    const x = ((((i * sp - heroOff) % L) + L) % L) - half; // -half .. half
+    const k = Math.abs(x) / half;                            // 0 centre, 1 edge
+    const scale = 1.18 - 0.55 * Math.pow(k, 0.85);
+    const rot = (x / half) * 18;
+    const y = k * k * 46;
+    const op = Math.max(0, Math.min(1, (1 - k) / 0.12));    // fade only right at the wrap point
+    p.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
+    p.style.opacity = op;
+    p.style.zIndex = String(100 - Math.round(k * 50));
+    p.style.filter = `brightness(${1 - k * 0.35})`;
+    const v = p.firstElementChild;
+    if (op > 0.05 && v.paused && !reduceMotion) v.play().catch(() => {});
+    else if (op <= 0.05 && !v.paused) v.pause();
+  });
+  requestAnimationFrame(drawHero);
+}
+requestAnimationFrame(drawHero);
+
 /* ---------- ticker ---------- */
 const ticker = document.getElementById("ticker");
 const tickerHTML = TITLES.map((t) => `<span>${t}</span>`).join("");
