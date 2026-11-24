@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucia Cartel Skills</title>
+  <meta name="description" content="The Claude Code skills behind every Lucia Cartel short. Watch what each one makes, then download it free.">
+  <meta property="og:title" content="Lucia Cartel Skills">
+  <meta property="og:description" content="The Claude Code skills behind every Lucia Cartel short. Download them free.">
+  <meta property="og:image" content="media/logo.jpg">
+  <meta name="theme-color" content="#2b1846">
+  <link rel="icon" href="media/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#skills">Skip to the skills</a>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Lucia Cartel home">
+      <img src="media/logo.jpg" alt="" width="44" height="44">
+      <span>Lucia Cartel</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="#skills">Skills</a>
+      <a href="#install">Install</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="btn btn-red btn-sm" href="https://www.youtube.com/@LUCIACARTEL?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+  </header>
+
+  <main id="top">
+    <!-- HERO: sunset skyline with billboard phones -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="sky" aria-hidden="true">
+        <div class="sun"></div>
+        <svg class="skyline far" id="skyline-far" preserveAspectRatio="none"></svg>
+        <svg class="skyline near" id="skyline-near" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-title" class="title" aria-label="Lucia Cartel">
+            <svg class="crown" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 L8 8 L22 22 L32 4 L42 22 L56 8 L60 36 Z" fill="#f6c343" stroke="#1a0f2e" stroke-width="3" stroke-linejoin="round"/><circle cx="8" cy="8" r="4" fill="#f6c343" stroke="#1a0f2e" stroke-width="2.5"/><circle cx="32" cy="4" r="4" fill="#f6c343" stroke="#1a0f2e" stroke-width="2.5"/><circle cx="56" cy="8" r="4" fill="#f6c343" stroke="#1a0f2e" stroke-width="2.5"/></svg>
+            <span class="line" data-split>Lucia</span>
+            <span class="line red" data-split>Cartel</span>
+          </h1>
+          <p class="lede">Real stories, history, science and mystery, made into cartoon shorts with code and Claude. These are the exact skills behind every video. Watch what each one makes, then take it home.</p>
+          <div class="hero-cta">
+            <a class="btn btn-gold" href="#skills">Get the skills</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@LUCIACARTEL/shorts" target="_blank" rel="noopener">Watch the channel</a>
+          </div>
+        </div>
+
+        <div class="billboards" aria-hidden="true">
+          <div class="phone b1"><video muted loop playsinline preload="none" poster="media/city-bank.jpg" data-src="media/city-bank.mp4"></video></div>
+          <div class="phone b2"><video muted loop playsinline preload="none" poster="media/doodle-gta6.jpg" data-src="media/doodle-gta6.mp4"></video></div>
+          <div class="phone b3"><video muted loop playsinline preload="none" poster="media/faceless-goosebumps.jpg" data-src="media/faceless-goosebumps.mp4"></video></div>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track" id="ticker"></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="skills" aria-labelledby="skills-title">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="section-head">
+        <h2 id="skills-title">Five skills, one channel</h2>
+        <p>Each skill is a folder you drop into Claude Code. Ask for a video and it writes the script, builds the scenes and renders the MP4. The clips playing next to each one were made with it.</p>
+      </div>
+      <div id="skill-list" class="skill-list"></div>
+    </section>
+
+    <!-- INSTALL -->
+    <section id="install" class="install" aria-labelledby="install-title">
+      <h2 id="install-title">Set one up in two minutes</h2>
+      <ol class="steps">
+        <li>
+          <h3>Download and unzip</h3>
+          <p>Pick a skill above and unzip it. You get one folder with a <code>SKILL.md</code> inside.</p>
+        </li>
+        <li>
+          <h3>Move it into your skills folder</h3>
+          <p>Put the folder in <code>~/.claude/skills/</code>. On Windows that is <code>C:\Users\you\.claude\skills\</code>.</p>
+        </li>
+        <li>
+          <h3>Ask Claude for a video</h3>
+          <p>Open Claude Code and say what you want, like <em>“use the faceless-shorts skill to make a short about why we get goosebumps.”</em></p>
+        </li>
+      </ol>
+      <p class="install-note">ClaudeAnimationBase1 is a project, not a single skill: unzip it anywhere, run <code>npm install</code>, then open the folder in Claude Code.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div class="about-card">
+        <img class="about-logo" src="media/logo.jpg" alt="Lucia Cartel channel logo: a cartoon character in a red hoodie and crown cap in front of the New York skyline" width="240" height="240" loading="lazy">
+        <div>
+          <h2 id="about-title">About the channel</h2>
+          <p>Lucia Cartel is a faceless shorts channel. Every video answers one question in under two minutes: what if you swallowed your phone, why can't you remember being a baby, how a glider landed a jet with empty tanks.</p>
+          <p>Nothing is filmed and nothing is stock. Characters, cities and captions are all drawn by code that Claude writes, using the skills on this page. 3.04K people subscribe so far, across 27 videos.</p>
+          <div class="hero-cta">
+            <a class="btn btn-red" href="https://www.youtube.com/@LUCIACARTEL?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+            <a class="btn btn-ghost" href="#skills">Back to the skills</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Made by Lucia Cartel. Skills are free to use. ClaudeAnimationBase1 builds on John Heibel's MIT-licensed starter kit.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
