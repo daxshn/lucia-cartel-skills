@@ -185,8 +185,8 @@ function drawHero(t) {
   const H = carousel.offsetHeight || 600;
   const ph = heroItems[0].el.offsetHeight || 260;
   const pw = heroItems[0].el.offsetWidth || 150;
-  const gapX = pw * 1.12;
-  const spY = ph * 1.1;
+  const gapX = pw * 1.04; // phones sit close together
+  const spY = ph * 1.04;
   const L = spY * PER_COL;
   const half = L / 2;
   heroItems.forEach((it) => {
@@ -196,13 +196,13 @@ function drawHero(t) {
     const dn = Math.min(1, Math.hypot(x / (W * 0.55), y / (H * 0.62)));
     const focus = Math.max(0, 1 - dn / 0.4);               // 1 only for the centre phone
     const scale = 0.86 + 0.36 * focus;
-    const blur = dn < 0.14 ? 0 : Math.round(Math.min(5, dn * 8) * 2) / 2; // quantised to keep repaints cheap
+    const blur = dn < 0.14 ? 0 : Math.round(Math.min(2.5, dn * 3.6) * 2) / 2; // light blur, quantised to keep repaints cheap
     const edge = Math.max(0, Math.min(1, (half - Math.abs(y)) / (spY * 0.5))); // fade at the wrap point
     it.el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
     it.el.style.opacity = edge;
     it.el.style.zIndex = String(100 - Math.round(dn * 60));
     if (blur !== it.blur) {
-      it.el.style.filter = blur ? `blur(${blur}px) brightness(${1 - dn * 0.4})` : "none";
+      it.el.style.filter = blur ? `blur(${blur}px) brightness(${1 - dn * 0.22})` : "none";
       it.blur = blur;
     }
     it.el.classList.toggle("focus", focus > 0.45);
