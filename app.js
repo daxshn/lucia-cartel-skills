@@ -195,7 +195,7 @@ function drawHero(t) {
     const x = it.c * gapX;
     const dn = Math.min(1, Math.hypot(x / (W * 0.55), y / (H * 0.62)));
     const focus = Math.max(0, 1 - dn / 0.4);               // 1 only for the centre phone
-    const scale = 0.86 + 0.36 * focus;
+    const scale = 1; // no zoom: every phone stays the same size, focus = sharp + glow
     const blur = dn < 0.14 ? 0 : Math.round(Math.min(2.5, dn * 3.6) * 2) / 2; // light blur, quantised to keep repaints cheap
     const edge = Math.max(0, Math.min(1, (half - Math.abs(y)) / (spY * 0.5))); // fade at the wrap point
     it.el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
