@@ -154,26 +154,33 @@ ticker.innerHTML = tickerHTML + tickerHTML;
 
 /* ---------- skills ---------- */
 const DL_ICON = '<svg class="dl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m6 10 6 6 6-6"/><path d="M4 21h16"/></svg>';
-const list = document.getElementById("skill-list");
-list.innerHTML = SKILLS.map((s) => `
-  <article class="skill reveal" style="--accent:${s.accent}" aria-labelledby="sk-${s.folder}">
+/* featured: one big billboard */
+const FEATURED = {
+  slug: "rubber-hose",
+  name: "1930s rubber hose cartoon",
+  accent: "#f6c343",
+  text: "Black-and-white cartoons with bendy rubber-hose limbs, pie-cut eyes and bouncing props, like a reel from 1930. Claude draws every frame in code, adds film grain and gate weave, and scores it. In the demo, a coffee cup chases a runaway sugar cube around the kitchen.",
+  needs: ["Canvas code", "Node", "ffmpeg", "Film grain + jitter"],
+  size: "81 KB",
+  film: "Coffee Cup Chase",
+};
+document.getElementById("skill-list").innerHTML = `
+  <article class="skill featured reveal" style="--accent:${FEATURED.accent}" aria-labelledby="sk-featured">
     <div class="skill-text">
-      <span class="chip">${s.folder}</span>
-      <h3 id="sk-${s.folder}">${s.name}</h3>
-      <p>${s.text}</p>
-      <ul class="needs" aria-label="What it uses">${s.needs.map((n) => `<li>${n}</li>`).join("")}</ul>
-      <a class="btn btn-gold" href="${s.file}" download>${DL_ICON} Download skill <small>${s.size}</small></a>
+      <span class="chip">${FEATURED.slug}</span>
+      <h3 id="sk-featured">${FEATURED.name}</h3>
+      <p>${FEATURED.text}</p>
+      <ul class="needs" aria-label="What it uses">${FEATURED.needs.map((n) => `<li>${n}</li>`).join("")}</ul>
+      <a class="btn btn-gold" href="downloads/styles/${FEATURED.slug}.zip" download>${DL_ICON} Download skill <small>${FEATURED.size}</small></a>
+      <p class="credit">A Lemo-Opuscar style by Lemomo. Free for non-commercial use, with credit.</p>
     </div>
     <div class="board">
-      <div class="reel">
-        ${s.clips.map(([id, title]) => `
-          <figure>
-            <div class="phone"><video muted loop playsinline preload="none" poster="media/${id}.jpg" data-src="media/${id}.mp4" aria-label="Clip from ${title}"></video></div>
-            <figcaption>${title}</figcaption>
-          </figure>`).join("")}
-      </div>
+      <figure class="wide">
+        <div class="screen"><video muted loop playsinline preload="none" poster="media/styles/${FEATURED.slug}.jpg" data-src="media/styles/${FEATURED.slug}.mp4" aria-label="Clip from ${FEATURED.film}"></video></div>
+        <figcaption>${FEATURED.film}</figcaption>
+      </figure>
     </div>
-  </article>`).join("");
+  </article>`;
 
 /* ---------- film styles (Lemo-Opuscar) ---------- */
 const STYLES = [
@@ -188,15 +195,34 @@ const STYLES = [
   ["crayon-world", "Crayon world 3D", "The Butterfly", "A first-person flight over a crayon village to one old man's flower.", "56 KB"],
   ["backrooms", "Liminal found footage", "Night Shift Orientation", "A new hire films their first night in an endless yellow office.", "68 KB"],
 ];
-document.getElementById("style-grid").innerHTML = STYLES.map(([slug, name, film, line, size]) => `
-  <article class="style-card reveal">
+const BLURB = {
+  "doodle-shorts-remotion": "Doodle people with round white faces living in soft-lit three.js rooms. Idea in, 40–65 s short out, with voice, captions and music.",
+  "ClaudeAnimationBase1": "Brush-stroke characters with boiling linework and watercolour fills, built with p5.js. The kit behind “Every type of person”.",
+  "in-this-city-gta-short": "“In this city…” rule shorts that look like a 3D open-world game, built in Blender with Python. Includes the bank balance scripts.",
+  "faceless-shorts": "Six faceless looks: science what-ifs, mysteries, stick figures, x-ray, paper history, true stories. Free local voice, zero cost.",
+  "cartoon-audio-short": "Bean-head cartoon characters in a 3D world with ink outlines, timed shot by shot to your own voiceover.",
+};
+const mine = SKILLS.map((s) => `
+  <article class="style-card reveal" style="--accent:${s.accent}">
+    <div class="screen duo">${s.clips.slice(0, 2).map(([id, title]) => `<video muted loop playsinline preload="none" poster="media/${id}.jpg" data-src="media/${id}.mp4" aria-label="Clip from ${title}"></video>`).join("")}</div>
+    <div class="style-body">
+      <span class="chip">${s.folder}</span>
+      <h3>${s.name}</h3>
+      <p>${BLURB[s.folder]}</p>
+      <a class="btn btn-gold btn-sm" href="${s.file}" download>${DL_ICON} Download skill <small>${s.size}</small></a>
+    </div>
+  </article>`);
+const styles = STYLES.filter(([slug]) => slug !== FEATURED.slug).map(([slug, name, film, line, size]) => `
+  <article class="style-card reveal" style="--accent:#f6c343">
     <div class="screen"><video muted loop playsinline preload="none" poster="media/styles/${slug}.jpg" data-src="media/styles/${slug}.mp4" aria-label="Clip from ${film}"></video></div>
     <div class="style-body">
+      <span class="chip">${slug}</span>
       <h3>${name}</h3>
       <p><strong>${film}.</strong> ${line}</p>
-      <a class="btn btn-gold btn-sm" href="downloads/styles/${slug}.zip" download>${DL_ICON} Download style <small>${size}</small></a>
+      <a class="btn btn-gold btn-sm" href="downloads/styles/${slug}.zip" download>${DL_ICON} Download skill <small>${size}</small></a>
     </div>
-  </article>`).join("");
+  </article>`);
+document.getElementById("style-grid").innerHTML = [...mine, ...styles].join("");
 
 /* ---------- play videos only while on screen ---------- */
 const videos = document.querySelectorAll("video[data-src]");

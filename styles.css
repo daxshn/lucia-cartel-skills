@@ -280,6 +280,24 @@ code {
 .style-card.reveal.in:nth-child(3n+2) { transform: translateY(24px); }
 .screen { aspect-ratio: 16 / 9; background: #000; border-bottom: 3px solid var(--ink); }
 .screen video { width: 100%; height: 100%; object-fit: cover; }
+.screen.duo {
+  display: flex; justify-content: center; align-items: center; gap: 5%;
+  padding: 12px 0;
+  overflow: hidden;
+  min-height: 0;
+  background: radial-gradient(90% 90% at 50% 100%, color-mix(in srgb, var(--accent) 40%, transparent), #12091f 75%);
+}
+.screen.duo video { width: auto; height: 100%; max-height: 100%; min-height: 0; aspect-ratio: 9 / 16; border: 3px solid var(--ink); border-radius: 12px; box-shadow: 0 4px 0 var(--ink); }
+.screen.duo video:first-child { transform: rotate(-3deg); }
+.screen.duo video:last-child { transform: rotate(3deg); }
+.style-body .chip { align-self: flex-start; font-size: .75rem; padding: 3px 9px; margin-bottom: 10px; }
+
+/* featured billboard with a wide screen */
+.skills { padding-bottom: 110px; }
+.board .wide { margin: 0; }
+.board .wide .screen { border: 5px solid var(--ink); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 0 var(--ink); }
+.board .wide figcaption { margin-top: 14px; font-size: .9rem; font-weight: 600; color: var(--paper-dim); text-align: center; }
+.credit { font-size: .85rem; margin: 16px 0 0 !important; opacity: .8; }
 .style-body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
 .style-body h3 { font-family: var(--display); font-weight: 400; font-size: 1.55rem; line-height: 1.1; margin: 0 0 8px; color: #fff; }
 .style-body p { margin: 0 0 18px; font-size: .95rem; color: var(--paper-dim); flex: 1; }
