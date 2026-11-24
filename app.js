@@ -148,7 +148,8 @@ document.querySelectorAll(".skyline .win").forEach((w) => {
 });
 
 /* ---------- hero: 7 different clips on a smooth endless conveyor ---------- */
-const HERO_CLIPS = ["doodle-gta6", "faceless-goosebumps", "clawd-bf", "city-bank", "cartoon-gimli", "faceless-blackhole", "city-lie"];
+// mix of channel shorts and Lemo-Opuscar films (cropped to 9:16, in media/hero/)
+const HERO_CLIPS = ["hero/rubber-hose", "doodle-gta6", "hero/neon-tubes", "city-bank", "hero/papercut-red", "clawd-bf", "hero/hd-2d"];
 const carousel = document.getElementById("carousel");
 carousel.innerHTML = HERO_CLIPS.map((id) => `<div class="phone"><video muted loop playsinline preload="metadata" poster="media/${id}.jpg" src="media/${id}.mp4"></video></div>`).join("");
 document.getElementById("dots").remove();
