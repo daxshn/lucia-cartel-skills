@@ -141,11 +141,84 @@ function buildSkyline(svg, { seed, color, minH, maxH, windows, spire }) {
   }
   svg.appendChild(frag);
 }
-buildSkyline(document.getElementById("skyline-far"), { seed: 7, color: "#5b2a78", minH: 120, maxH: 330, windows: false, spire: true });
-buildSkyline(document.getElementById("skyline-near"), { seed: 31, color: "#1a0f2e", minH: 70, maxH: 260, windows: true, spire: false });
-document.querySelectorAll(".skyline .win").forEach((w) => {
-  w.classList.add(Math.random() > 0.93 ? "flick" : "on");
-});
+/* ---------- space: parallax starfield flying past, shooting stars ---------- */
+(function starfield() {
+  const cv = document.getElementById("starfield");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const COLORS = ["#ffffff", "#ffffff", "#ffffff", "#8be9ff", "#ff9bd2", "#ffe08a", "#b9a6ff"];
+  let W = 0, H = 0, dpr = 1, stars = [], shoot = null, last = 0;
+  const LAYERS = [
+    { n: 160, speed: 18, size: [0.4, 1.0], streak: 0 },
+    { n: 90, speed: 70, size: [0.8, 1.6], streak: 0.06 },
+    { n: 40, speed: 240, size: [1.2, 2.4], streak: 0.12 },
+  ];
+  function resize() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = [];
+    LAYERS.forEach((L, li) => {
+      const count = Math.round(L.n * (W * H) / (1440 * 900));
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * W, y: Math.random() * H, li,
+          r: L.size[0] + Math.random() * (L.size[1] - L.size[0]),
+          c: COLORS[(Math.random() * COLORS.length) | 0],
+          tw: Math.random() * Math.PI * 2,
+        });
+      }
+    });
+  }
+  function frame(t) {
+    const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
+    last = t;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const L = LAYERS[s.li];
+      if (!reduceMotion) {
+        s.x -= L.speed * dt;
+        s.y += L.speed * 0.12 * dt; // slight diagonal: we fly up-right
+        if (s.x < -20) { s.x = W + 20; s.y = Math.random() * H; }
+        if (s.y > H + 10) s.y = -10;
+      }
+      s.tw += dt * 3;
+      const a = 0.65 + 0.35 * Math.sin(s.tw);
+      ctx.globalAlpha = a;
+      if (L.streak && !reduceMotion) {
+        const len = L.speed * L.streak * (1 + s.r);
+        const g = ctx.createLinearGradient(s.x, s.y, s.x + len, s.y - len * 0.12);
+        g.addColorStop(0, s.c); g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.strokeStyle = g; ctx.lineWidth = s.r; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x + len, s.y - len * 0.12); ctx.stroke();
+      } else {
+        ctx.fillStyle = s.c;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    // shooting star every few seconds
+    if (!reduceMotion) {
+      if (!shoot && Math.random() < dt * 0.35) {
+        shoot = { x: W * (0.3 + Math.random() * 0.7), y: H * Math.random() * 0.4, vx: -900, vy: 260, life: 0 };
+      }
+      if (shoot) {
+        shoot.life += dt; shoot.x += shoot.vx * dt; shoot.y += shoot.vy * dt;
+        const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x + 160, shoot.y - 46);
+        g.addColorStop(0, "#fff"); g.addColorStop(1, "rgba(139,233,255,0)");
+        ctx.globalAlpha = Math.max(0, 1 - shoot.life / 0.9);
+        ctx.strokeStyle = g; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x + 160, shoot.y - 46); ctx.stroke();
+        if (shoot.life > 0.9) shoot = null;
+      }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+})();
 
 /* ---------- hero: 7 different clips on a smooth endless conveyor ---------- */
 // columns of phones that all slide top to bottom; the phone nearest the centre is
