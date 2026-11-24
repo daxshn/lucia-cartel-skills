@@ -148,6 +148,26 @@ code {
 .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
 .hero-copy .hero-cta { align-items: flex-start; gap: 18px; }
 
+/* every button: shine sweep + lift + coloured glow; download icon drops in a loop */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: transform .18s ease, box-shadow .18s ease, background .25s ease, filter .2s ease; }
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .7) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn:hover::before { transform: translateX(120%); transition: transform .7s ease; }
+.btn:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 9px 0 var(--ink), 0 0 30px color-mix(in srgb, var(--glow, var(--gold)) 70%, transparent); filter: saturate(1.15) brightness(1.06); }
+.btn-gold { --glow: var(--accent, var(--gold)); }
+.btn-red { --glow: var(--red); }
+.btn-ghost { --glow: #fff; }
+.btn-ghost:hover { background: rgba(255, 244, 230, .16); }
+.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--ink); }
+.btn .dl-icon { transition: transform .2s ease; }
+.btn:hover .dl-icon { animation: drop-dl .8s ease-in-out infinite; }
+@keyframes drop-dl { 0% { transform: translateY(-3px); opacity: .6; } 50% { transform: translateY(3px); opacity: 1; } 100% { transform: translateY(-3px); opacity: .6; } }
+.btn small { transition: opacity .2s ease; }
+.btn:hover small { opacity: 1; }
+
 /* gold button: lift, glow, shine sweep, bouncing arrow */
 .btn-shine { position: relative; overflow: hidden; isolation: isolate; transition: transform .18s ease, box-shadow .18s ease, background .25s ease; }
 .btn-shine::before {
